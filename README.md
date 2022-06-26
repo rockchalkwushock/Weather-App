@@ -1,15 +1,5 @@
-# glowing-octo-telegram
+# Weather App
 
-> I am great at naming things so I let GitHub do it for me 🤡
+Yet another weather app 🤡
 
-Template for starting a React Application.
-
-Template contains:
-
-- `eslint`
-- `react-query`
-- `react-router-dom`
-- `storybook`
-- `tailwindcss`
-- `typescript`
-- `vite`
+Built with [Open Weather Map](https://openweathermap.org/), React, Tailwind, TypeScript, & Vite.

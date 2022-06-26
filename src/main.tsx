@@ -1,7 +1,6 @@
 import './index.css'
 
 import { DataClient, DataDevtools, DataProvider } from '@services/data'
-import { Router } from '@services/router'
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 
@@ -13,9 +12,7 @@ const client = new DataClient()
 createRoot(document.getElementById('root')!).render(
 	<StrictMode>
 		<DataProvider client={client}>
-			<Router>
-				<App />
-			</Router>
+			<App />
 			<DataDevtools />
 		</DataProvider>
 	</StrictMode>
