@@ -5,6 +5,9 @@ on:
     branches:
       - 'production'
 
+env:
+  VITE_OWM_API_KEY: ${{ secrets.VITE_OWM_API_KEY }}
+
 jobs:
   deploy_release:
     runs-on: ubuntu-latest
