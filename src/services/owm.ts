@@ -1,4 +1,8 @@
-import { OWMRawResponse, WeatherError } from '@interfaces/weather'
+import {
+	CurrentWeather,
+	OWMCurrentRawResponse,
+	WeatherError,
+} from '@interfaces/weather'
 
 if (typeof import.meta.env.VITE_OWM_API_KEY === 'undefined') {
 	throw new Error(`
@@ -8,15 +12,13 @@ if (typeof import.meta.env.VITE_OWM_API_KEY === 'undefined') {
   `)
 }
 
-const BASE_URL = 'https://api.openweathermap.org/data/2.5'
+export const BASE_URL = 'https://api.openweathermap.org/data/2.5'
 
-export const fetchWeather = async (
+export const fetchCurrentWeatherByCity = async (
 	city: string
-): Promise<unknown | WeatherError> => {
+): Promise<CurrentWeather | WeatherError> => {
 	const res = await fetch(
-		`${BASE_URL}/onecall?q=${city}&exclude=hourly,minutely&appid=${
-			import.meta.env.VITE_OWM_API_KEY
-		}`
+		`${BASE_URL}/weather?q=${city}&appid=${import.meta.env.VITE_OWM_API_KEY}`
 	)
 
 	if (!res.ok) {
@@ -26,8 +28,28 @@ export const fetchWeather = async (
 		}
 	}
 
-	const { alerts, current, daily, lat, lon, timezone, timezone_offset } =
-		(await res.json()) as OWMRawResponse
+	const {
+		main: { feels_like, humidity, pressure, temp, temp_max, temp_min },
+		name,
+		sys: { country, sunrise, sunset },
+		weather: [{ description, icon }],
+		wind: { deg, speed },
+	} = (await res.json()) as OWMCurrentRawResponse
 
-	return { alerts, current, daily, lat, lon, timezone, timezone_offset }
+	return {
+		description,
+		country,
+		feelsLike: feels_like,
+		humidity,
+		icon,
+		name,
+		pressure,
+		sunrise,
+		sunset,
+		temp,
+		tempMax: temp_max,
+		tempMin: temp_min,
+		windDeg: deg,
+		windSpeed: speed,
+	}
 }
