@@ -1,82 +1,82 @@
-export type OWMRawResponse = {
-	alerts: Array<Alert>
-	current: Current
-	daily: Array<Day>
+export type OWMCurrentRawResponse = {
+	base: 'stations'
+	clouds: Clouds
+	cod: string
+	coord: Coord
+	dt: number
+	id: number
+	main: Main
+	name: string
+	sys: Sys
+	timezone: number //
+	weather: Array<Weather>
+	wind: Wind
+	visibility: number
+}
+export type OWMForecastRawResponse = {
+	city: {
+		coord: Coord
+		country: string
+		id: number
+		name: string
+		population: number
+		sunrise: number
+		sunset: number
+		timezone: number
+	}
+	cnt: number
+	cod: string
+	list: Array<Forecast>
+	message: number
+}
+
+type Clouds = {
+	all: number
+}
+type Coord = {
 	lat: number
 	lon: number
-	timezone: string
-	timezone_offset: number
 }
 
-type Alert = {
-	description: string
-	end: number // UNIX timestamp (UTC)
-	event: string
-	sender_name: string
-	start: number // UNIX timestamp (UTC)
-	tags: Array<string>
-}
-
-type Current = {
-	dt: number // UNIX timestamp (UTC)
-	sunrise: number // UNIX timestamp (UTC)
-	sunset: number // UNIX timestamp (UTC)
-	temp: number // Kelvin
-	feels_like: number // Kelvin
-	pressure: number
-	humidity: number
-	dew_point: number
-	clouds: number
-	uvi: number
-	visibility: number
-	wind_speed: number
-	wind_gust: number
-	wind_deg: number
-	rain: Precipitation
-	snow: Precipitation
-	weather: Weather
-}
-
-type Day = {
+type Forecast = {
+	clouds: Clouds
 	dt: number
+	dt_text: string
+	main: Main & {
+		grnd_level: number
+		sea_level: number
+		temp_kf: number
+	}
+	pop: number
+	rain: { '3h': number }
+	sys: { pod: 'n' }
+	weather: Array<Weather>
+	wind: Wind & {
+		gust: number
+	}
+	visibility: number
+}
+
+type Main = {
+	feels_like: number
+	humidity: number
+	pressure: number
+	temp: number
+	temp_max: number
+	temp_min: number
+}
+
+type Sys = {
+	country: string
+	id: number
 	sunrise: number
 	sunset: number
-	moonset: number
-	moonrise: number
-	moon_phase: number
-	temp: Temp
-	feels_like: FeelLike
-	pressure: number
-	humidity: number
-	dew_point: number
-	wind_speed: number
-	wind_gust: number
-	wind_deg: number
-	clouds: number
-	uvi: number
-	pop: number
-	rain: number
-	weather: Array<Weather>
+	type: number // possible enum
 }
 
-type FeelLike = {
-	morn: number // Kelvin
-	day: number // Kelvin
-	eve: number // Kelvin
-	night: number // Kelvin
-}
-
-type Precipitation = {
-	'1h': number
-}
-
-type Temp = {
-	morn: number // Kelvin
-	day: number // Kelvin
-	eve: number // Kelvin
-	night: number // Kelvin
-	min: number // Kelvin
-	max: number // Kelvin
+type Wind = {
+	deg: number
+	speed: number
 }
 
 type Weather = {
@@ -90,3 +90,37 @@ export type WeatherError = {
 	message: string
 	status: number
 }
+
+export type CurrentWeather = {
+	description: string
+	country: string
+	feelsLike: number
+	humidity: number
+	icon: string
+	name: string
+	pressure: number
+	sunrise: number
+	sunset: number
+	temp: number
+	tempMax: number
+	tempMin: number
+	windDeg: number
+	windSpeed: number
+}
+
+export type City =
+	| 'Bogota'
+	| 'Cairo'
+	| 'Kiev'
+	| 'Lawrence'
+	| 'London'
+	| 'Paris'
+	| 'Portland'
+	| 'Moscow'
+	| 'Shanghai'
+	| 'Tokyo'
+	| 'Tunis'
+export type Pressure = 'in' | 'mbars'
+export type Speed = 'mph' | 'kmh'
+export type Temperature = 'C' | 'F'
+export type Volume = 'in' | 'mm'
