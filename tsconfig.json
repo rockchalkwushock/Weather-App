@@ -18,19 +18,17 @@
 			"@contexts/*": ["contexts/*"],
 			"@hooks/*": ["hooks/*"],
 			"@interfaces/*": ["interfaces/*"],
-			"@layouts/*": ["layouts/*"],
-			"@pages/*": ["pages/*"],
 			"@services/*": ["services/*"],
 			"@utils/*": ["utils/*"]
 		},
 		"resolveJsonModule": true,
-		"skipLibCheck": false,
+		"skipLibCheck": true,
 		"strict": true,
 		"target": "ESNext",
 		"types": ["vite/client", "vitest"],
 		"useDefineForClassFields": true
 	},
 	"exclude": ["node_modules"],
-	"include": ["src", "./.storybook"],
+	"include": ["src"],
 	"references": [{ "path": "./tsconfig.node.json" }]
 }
