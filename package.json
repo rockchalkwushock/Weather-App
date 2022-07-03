@@ -18,21 +18,23 @@
 		"format": "prettier . --write --ignore-unknown",
 		"lint": "eslint --cache --fix --ext .js,.ts,.tsx src",
 		"preview": "vite preview",
-		"test": "vitest run --passWithNoTests",
-		"test:ui": "vitest --ui",
-		"test:watch": "vitest dev",
+		"test": "TZ=UTC vitest run --passWithNoTests",
+		"test:ui": "TZ=UTC vitest --ui",
+		"test:watch": "TZ=UTC vitest dev",
 		"type-check": "tsc"
 	},
 	"dependencies": {
+		"daisyui": "^2.17.0",
 		"react": "~18.2.0",
 		"react-dom": "~18.2.0",
-		"react-query": "^3.39.1"
+		"react-icons": "^4.4.0",
+		"react-query": "^3.39.1",
+		"react-select": "^5.4.0"
 	},
 	"devDependencies": {
 		"@evilmartians/lefthook": "~1.0.1",
 		"@testing-library/jest-dom": "~5.16.4",
 		"@testing-library/react": "~13.3.0",
-		"@testing-library/react-hooks": "~8.0.1",
 		"@testing-library/user-event": "~14.2.1",
 		"@types/node": "~18.0.0",
 		"@types/react": "~18.0.14",
@@ -55,6 +57,7 @@
 		"eslint-plugin-tailwindcss": "~3.5.2",
 		"eslint-plugin-testing-library": "~5.5.1",
 		"jsdom": "~20.0.0",
+		"msw": "^0.42.3",
 		"postcss": "~8.4.14",
 		"postcss-import": "~14.1.0",
 		"postcss-preset-env": "~7.7.1",
@@ -64,5 +67,8 @@
 		"vite": "~2.9.12",
 		"vite-tsconfig-paths": "~3.5.0",
 		"vitest": "~0.15.2"
+	},
+	"msw": {
+		"workerDirectory": "public"
 	}
 }

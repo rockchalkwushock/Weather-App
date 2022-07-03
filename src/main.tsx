@@ -6,14 +6,38 @@ import { createRoot } from 'react-dom/client'
 
 import App from './App'
 
-const client = new DataClient()
+import('./mocks/browser').then(({ worker }) => {
+	let client: DataClient
+	if (import.meta.env.DEV) {
+		worker.start()
+		client = new DataClient({
+			defaultOptions: {
+				queries: {
+					retry: false,
+				},
+			},
+		})
+		// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+		createRoot(document.getElementById('root')!).render(
+			<StrictMode>
+				<DataProvider client={client}>
+					<App />
+					<DataDevtools />
+				</DataProvider>
+			</StrictMode>
+		)
+		return
+	}
 
-// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-createRoot(document.getElementById('root')!).render(
-	<StrictMode>
-		<DataProvider client={client}>
-			<App />
-			<DataDevtools />
-		</DataProvider>
-	</StrictMode>
-)
+	client = new DataClient()
+
+	// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+	createRoot(document.getElementById('root')!).render(
+		<StrictMode>
+			<DataProvider client={client}>
+				<App />
+				<DataDevtools />
+			</DataProvider>
+		</StrictMode>
+	)
+})
