@@ -21,7 +21,7 @@ type Props = {
 
 export const Weather: FC<Props> = ({ city, units }) => {
 	const { data } = useCurrentWeather(city)
-	return (
+	return data ? (
 		<>
 			<h1 className='text-3xl'>
 				{data?.name}, {data?.country}
@@ -94,5 +94,5 @@ export const Weather: FC<Props> = ({ city, units }) => {
 				</div>
 			</div>
 		</>
-	)
+	) : null
 }
