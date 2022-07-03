@@ -1,13 +1,15 @@
 import { State } from '@hooks/useUnits'
 import type { HourlyForecast } from '@interfaces/weather'
 import { toCelsius, toFahrenheit, toMbars, toPSI } from '@utils/converters'
+import { toHumanReadableTime } from '@utils/datetime'
 import type { FC } from 'react'
 
 type Props = HourlyForecast & {
-	units: Pick<State, 'pressure' | 'speed' | 'temperature' | 'volume'>
+	units: State
 }
 
 export const Forecast: FC<Props> = ({
+	dt,
 	feelsLike,
 	humidity,
 	icon,
@@ -20,39 +22,43 @@ export const Forecast: FC<Props> = ({
 	units,
 }) => {
 	return (
-		<div className='flex flex-col items-center p-4 rounded-lg border'>
-			<h2>
-				{units.temperature === 'C' ? toCelsius(temp) : toFahrenheit(temp)}
-			</h2>
-			<img src={`http://openweathermap.org/img/wn/${icon}@2x.png`} alt={main} />
-			<div className='flex items-center space-x-2'>
+		<tr key={dt}>
+			<th>
 				<span>
-					{units.temperature === 'C'
-						? toCelsius(tempMin)
-						: toFahrenheit(tempMin)}
+					{toHumanReadableTime(dt, units.city, {
+						weekday: 'short',
+					})}
 				</span>
-				<span>|</span>
-				<span>
-					{units.temperature === 'C'
-						? toCelsius(tempMax)
-						: toFahrenheit(tempMax)}
-				</span>
-			</div>
-			<div className='flex items-center space-x-2'>
-				<span>
-					{units.temperature === 'C'
-						? toCelsius(feelsLike)
-						: toFahrenheit(feelsLike)}
-				</span>
-				<span>|</span>
-				<span>{humidity}%</span>
-				<span>|</span>
-				<span>
-					{units.pressure === 'in' ? toPSI(pressure) : toMbars(pressure)}
-				</span>
-				<span>|</span>
-				<span>{pop * 100}%</span>
-			</div>
-		</div>
+				<img
+					alt={main}
+					src={`http://openweathermap.org/img/wn/${icon}@2x.png`}
+				/>
+			</th>
+			<th>
+				{units.temperature === 'C'
+					? `${toCelsius(temp)} C˚`
+					: `${toFahrenheit(temp)} F˚`}
+			</th>
+			<th>
+				{units.temperature === 'C'
+					? `${toCelsius(feelsLike)} C˚`
+					: `${toFahrenheit(feelsLike)} F˚`}
+			</th>
+			<th>
+				{units.temperature === 'C'
+					? `${toCelsius(tempMin)} C˚`
+					: `${toFahrenheit(tempMin)} F˚`}
+			</th>
+			<th>
+				{units.temperature === 'C'
+					? `${toCelsius(tempMax)} C˚`
+					: `${toFahrenheit(tempMax)} F˚`}
+			</th>
+			<th>{humidity}%</th>
+			<th>{pop * 100}%</th>
+			<th>
+				{units.pressure === 'mbars' ? toMbars(pressure) : toPSI(pressure)}
+			</th>
+		</tr>
 	)
 }

@@ -16,7 +16,7 @@ function App() {
 	return (
 		<ErrorBoundary>
 			<Suspense fallback={<LoadingOverlay />}>
-				<div className='container flex flex-col mx-auto space-y-6 max-w-4xl h-full min-h-screen border border-red-500'>
+				<div className='container flex flex-col mx-auto space-y-6 max-w-4xl h-full min-h-screen'>
 					<header className='flex flex-col justify-center items-center pt-6 space-y-6'>
 						<h1 className='text-4xl text-accent'>Weather App</h1>
 
@@ -35,11 +35,27 @@ function App() {
 					<main className='flex flex-col flex-1 justify-center items-center space-y-8'>
 						<Weather city={state.city} units={state} />
 
-						<div className='flex items-center space-x-6'>
-							{data &&
-								data.map(forecast => (
-									<Forecast {...forecast} key={forecast.dt} units={state} />
-								))}
+						<div className='overflow-x-auto max-w-xs md:w-full md:max-w-2xl lg:max-w-full'>
+							<table className='table w-full table-compact md:table-normal'>
+								<thead>
+									<tr>
+										<th></th>
+										<th>Temp</th>
+										<th>Feels Like</th>
+										<th>Min</th>
+										<th>Max</th>
+										<th>Humidity</th>
+										<th>Precipitation</th>
+										<th>Pressure</th>
+									</tr>
+								</thead>
+								<tbody>
+									{data &&
+										data.map(forecast => (
+											<Forecast {...forecast} key={forecast.dt} units={state} />
+										))}
+								</tbody>
+							</table>
 						</div>
 					</main>
 					<footer className='px-4 pt-4 pb-6 footer footer-center text-base-content'>

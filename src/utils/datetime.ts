@@ -14,12 +14,14 @@ const timeZoneMap = {
 	Tunis: 'Africa/Tunis',
 }
 
-export const toHumanReadableTime = (unixTimestamp: number, city: City) => {
+export const toHumanReadableTime = (
+	unixTimestamp: number,
+	city: City,
+	options?: Intl.DateTimeFormatOptions
+) => {
 	const { locale } = new Intl.DateTimeFormat().resolvedOptions()
 	return new Intl.DateTimeFormat(locale, {
-		hour: '2-digit',
-		hour12: false,
-		minute: '2-digit',
 		timeZone: timeZoneMap[city],
+		...(options ?? {}),
 	}).format(new Date(unixTimestamp * 1000))
 }

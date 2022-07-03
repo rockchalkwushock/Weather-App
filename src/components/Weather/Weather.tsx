@@ -83,13 +83,21 @@ export const Weather: FC<Props> = ({ city, units }) => {
 				<div className='flex items-center space-x-2'>
 					<WiSunrise className='w-12 h-12' />
 					<span className='text-lg'>
-						{toHumanReadableTime(data!.sunrise, city)}
+						{toHumanReadableTime(data!.sunrise, city, {
+							hour: '2-digit',
+							hour12: false,
+							minute: '2-digit',
+						})}
 					</span>
 				</div>
 				<div className='flex items-center space-x-2'>
 					<WiSunset className='w-12 h-12' />
 					<span className='text-lg'>
-						{toHumanReadableTime(data!.sunset, city)}
+						{toHumanReadableTime(data!.sunset, city, {
+							hour: '2-digit',
+							hour12: false,
+							minute: '2-digit',
+						})}
 					</span>
 				</div>
 			</div>
