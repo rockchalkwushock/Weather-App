@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { useCurrentWeather } from '@hooks/useCurrentWeather'
-import { State } from '@hooks/useUnits'
-import type { City } from '@interfaces/weather'
+import type { State } from '@hooks/useUnits'
 import {
 	toCelsius,
 	toFahrenheit,
@@ -14,12 +13,9 @@ import { toHumanReadableTime } from '@utils/datetime'
 import type { FC } from 'react'
 import { WiBarometer, WiHumidity, WiSunrise, WiSunset } from 'react-icons/wi'
 
-type Props = {
-	city: City
-	units: Pick<State, 'pressure' | 'speed' | 'temperature' | 'volume'>
-}
+type Props = State
 
-export const Weather: FC<Props> = ({ city, units }) => {
+export const Weather: FC<Props> = ({ city, pressure, speed, temperature }) => {
 	const { data } = useCurrentWeather(city)
 	return data ? (
 		<>
@@ -28,7 +24,7 @@ export const Weather: FC<Props> = ({ city, units }) => {
 			</h1>
 			<div className='indicator'>
 				<span className='p-2 text-lg shadow-lg indicator-item badge badge-error'>
-					{units.temperature === 'C' ? (
+					{temperature === 'C' ? (
 						<span>{toCelsius(data!.tempMax)} C˚</span>
 					) : (
 						<span>{toFahrenheit(data!.tempMax)} F˚</span>
@@ -36,7 +32,7 @@ export const Weather: FC<Props> = ({ city, units }) => {
 				</span>
 				<div className='grid place-items-center w-60 h-60 rounded-full shadow-lg bg-base-300'>
 					<span className='text-6xl'>
-						{units.temperature === 'C' ? (
+						{temperature === 'C' ? (
 							<span>{toCelsius(data!.temp)} C˚</span>
 						) : (
 							<span>{toFahrenheit(data!.temp)} F˚</span>
@@ -44,7 +40,7 @@ export const Weather: FC<Props> = ({ city, units }) => {
 					</span>
 				</div>
 				<span className='p-2 text-lg shadow-lg indicator-item indicator-start indicator-bottom badge badge-primary'>
-					{units.temperature === 'C' ? (
+					{temperature === 'C' ? (
 						<span>{toCelsius(data!.tempMin)} C˚</span>
 					) : (
 						<span>{toFahrenheit(data!.tempMin)} F˚</span>
@@ -57,7 +53,7 @@ export const Weather: FC<Props> = ({ city, units }) => {
 					<span className='text-lg'>{data!.humidity} %</span>
 				</div>
 				<div className='flex space-x-4'>
-					{units.pressure === 'in' ? (
+					{pressure === 'in' ? (
 						<div className='flex items-center'>
 							<WiBarometer className='w-12 h-12' />
 							<span>{toPSI(data!.pressure)} psi</span>
@@ -71,7 +67,7 @@ export const Weather: FC<Props> = ({ city, units }) => {
 				</div>
 				<div className='flex space-x-4'>
 					<div className='flex items-center'>
-						{units.speed === 'kmh' ? (
+						{speed === 'kmh' ? (
 							<span>{toKMH(data!.windSpeed)} km/h</span>
 						) : (
 							<span>{toMPH(data!.windSpeed)} mph</span>

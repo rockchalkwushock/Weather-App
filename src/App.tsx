@@ -4,14 +4,11 @@ import { LoadingOverlay } from '@components/LoadingOverlay'
 import { Select } from '@components/Select'
 import { UnitGroup } from '@components/UnitGroup'
 import { Weather } from '@components/Weather'
-import { useForecast } from '@hooks/useForecast'
 import { useUnits } from '@hooks/useUnits'
 import { Suspense } from 'react'
 
 function App() {
 	const [state, dispatch] = useUnits()
-
-	const { data } = useForecast(state.city)
 
 	return (
 		<ErrorBoundary>
@@ -33,30 +30,9 @@ function App() {
 						<UnitGroup onChange={dispatch} units={state} />
 					</header>
 					<main className='flex flex-col flex-1 justify-center items-center space-y-8'>
-						<Weather city={state.city} units={state} />
+						<Weather {...state} />
 
-						<div className='overflow-x-auto max-w-xs md:w-full md:max-w-2xl lg:max-w-full'>
-							<table className='table w-full table-compact md:table-normal'>
-								<thead>
-									<tr>
-										<th></th>
-										<th>Temp</th>
-										<th>Feels Like</th>
-										<th>Min</th>
-										<th>Max</th>
-										<th>Humidity</th>
-										<th>Precipitation</th>
-										<th>Pressure</th>
-									</tr>
-								</thead>
-								<tbody>
-									{data &&
-										data.map(forecast => (
-											<Forecast {...forecast} key={forecast.dt} units={state} />
-										))}
-								</tbody>
-							</table>
-						</div>
+						<Forecast {...state} />
 					</main>
 					<footer className='px-4 pt-4 pb-6 footer footer-center text-base-content'>
 						<span>
