@@ -1,7 +1,7 @@
 {
-	"name": "glowing-octo-telegram",
-	"version": "0.0.0",
-	"description": "React Template with TypeScript & Vite.",
+	"name": "weather-app",
+	"version": "0.1.0",
+	"description": "Weather Application built with DaisyUI, Open Weather Map API, React, React-Query, TailwindCSS, & TypeScript",
 	"license": "MIT",
 	"author": {
 		"email": "me@codybrunner.com",
