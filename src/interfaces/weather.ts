@@ -38,7 +38,7 @@ type Coord = {
 	lon: number
 }
 
-type Forecast = {
+export type Forecast = {
 	clouds: Clouds
 	dt: number
 	dt_text: string
@@ -105,6 +105,20 @@ export type CurrentWeather = {
 	tempMax: number
 	tempMin: number
 	windDeg: number
+	windSpeed: number
+}
+
+export type HourlyForecast = Pick<Forecast, 'dt' | 'pop'> & {
+	feelsLike: number
+	humidity: number
+	icon: string
+	main: string
+	pressure: number
+	temp: number
+	tempMax: number
+	tempMin: number
+	windDeg: number
+	windGust: number
 	windSpeed: number
 }
 
